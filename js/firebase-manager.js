@@ -37,7 +37,6 @@ var firebaseManager = {
         var d = new Date();
         var today = d.getFullYear() + "/" + d.getMonth() + "/" + d.getDate();
 
-        console.log(today);
         return firebase.database().ref('/users/' + user_id).once('value').then(function (messages) {
             if (messages.val()) {
                 //GET NUM OF VIBES ALREADY UPLOADED
@@ -57,7 +56,6 @@ var firebaseManager = {
     },
 
     uploadToFirebase: function (vibe) {
-        console.log(vibe);
         var databaseRef = firebase.database().ref("users/" + user.id + "/" + vibe.timestamp).set(vibe);
     },
 
