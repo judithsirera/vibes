@@ -31,8 +31,6 @@ var user = {
             expires: 700000
         });
 
-        console.log("vibes - ", this.vibes)
-
         $(".jar-img").attr("src", "img/jar-" + this.vibes + ".png")
     }
 }
@@ -48,27 +46,26 @@ var firebaseManager = {
         messagingSenderId: "1019159236803"
     },
 
-    downloadAllData: function (user_id) {
+    setupData: function (user_id) {
+        user_id = 98761;
         var d = new Date();
         var today = d.getFullYear() + "/" + d.getMonth() + "/" + d.getDate();
 
         console.log(today);
         return firebase.database().ref('/users/' + user_id).once('value').then(function (messages) {
-            var i = 0;
-            messages.forEach(function (msg) {
-               if (msg.val().toCompare != today) {
-                   user.data[i] = msg.val();
-                   i++;
-               }
-            });
-        });
-    },
-
-    setSmilesInBox: function (user_id) {
-        return firebase.database().ref('/users/' + user_id).once('value').then(function (messages) {
             if (messages.val()) {
+                //GET NUM OF VIBES ALREADY UPLOADED
                 var l = Object.keys(messages.val()).length;
                 user.updateVibes(l); 
+
+                //GET VIBES FROM YESTERDAY
+                var i = 0;
+                messages.forEach(function (msg) {
+                    if (msg.val().toCompare != today) {
+                        user.data[i] = msg.val();
+                        i++;
+                    }
+                });
             }
         });
     },
@@ -80,7 +77,7 @@ var firebaseManager = {
 
     init: function () {
         firebase.initializeApp(this.config);
-        this.setSmilesInBox(user.id);
+        this.setupData(user.id);
     }
 }
 

@@ -33,17 +33,23 @@ function animateBox() {
 }
 
 function showVibe() {
+    input.value = '';
     if (user.data.length > 0) {
         $("#vibe").addClass("hide");
-        $("#remembering").attr("class", "show");
-    } else {
-        input.value = '';
+        $("#tbt").attr("class", "show");
+
+        var idx = Math.floor(Math.random(user.data.length * 10, 0));
+        $("#tbt-date").html(user.data[idx].weekDay + ", " + user.data[idx].monthName + " " + user.data[idx].day + " of " + user.data[idx].year);
+        $("#tbt-text").html(user.data[idx].text);
+
+        $("#upload").off("click", submitText).on("click", hideVibe);
     }
 }
 
 function hideVibe() {
     $("#vibe").attr("class", "center-align");
-    $("#remembering").attr("class", "hide");
+    $("#tbt").attr("class", "hide");
+    $("#upload").on("click", submitText)
 }
 
 function submitText() {
@@ -75,9 +81,7 @@ input.addEventListener('keydown', function (e) {
     autosize();
 })
 
-$("#upload").on("click", function (e) {
-    submitText();
-})
+$("#upload").on("click", submitText)
 
 document.getElementById("jar-img").addEventListener("animationend", function (e) {
     $(".jar-img").removeClass("animate");
