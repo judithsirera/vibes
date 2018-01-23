@@ -1,13 +1,14 @@
+
 body {
     font-family: 'myFont' !important;
     font-weight: normal;
     font-style: normal;
 }
 
+
 .center {
     margin: auto;
-    width: 70%;
-    padding: 10px;
+    width: 60%;
 }
 
 #cloud-img {
@@ -18,10 +19,6 @@ body {
     filter: FlipH;
     -ms-filter: "FlipH";
     width: 15em;
-}
-
-.jar-img {
-    width: 6em;
 }
 
 header {
@@ -38,11 +35,11 @@ footer {
 textarea {
     border: none !important;
     box-shadow: none !important;
-    font-size: 24px;
+    font-size: 34px;
     width: 90%;
     height: 100px;
     max-height: 300px;
-    margin-bottom: 1em !important;
+    margin: 1em !important;
     outline: none;
     resize: none;
     overflow-x: hidden;
@@ -89,6 +86,7 @@ textarea {
 }
 
 .jar-img {
+    width: 5em;
     background: none;
     border: none;
 }
@@ -108,4 +106,8 @@ textarea {
 
 .jar-img:focus {
     background: none !important;
+}
+
+.logo-img {
+    width: 5em;
 }

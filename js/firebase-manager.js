@@ -45,8 +45,8 @@ var firebaseManager = {
         messagingSenderId: "1019159236803"
     },
 
-    downloadOne: function (user) {
-        return firebase.database().ref('/users/' + "55571").once('value').then(function (messages) {
+    downloadOne: function (user_id) {
+        return firebase.database().ref('/users/' + user_id).once('value').then(function (messages) {
             messages.forEach(function (msg) {
                 console.log(msg.val());
             });
@@ -55,7 +55,7 @@ var firebaseManager = {
     },
 
     setSmilesInBox: function (user_id) {
-        return firebase.database().ref('/users/' + "55571").once('value').then(function (messages) {
+        return firebase.database().ref('/users/' + user_id).once('value').then(function (messages) {
             var l = Object.keys(messages.val()).length;
             user.updateVibes(l)
         });
@@ -68,7 +68,7 @@ var firebaseManager = {
 
     init: function () {
         firebase.initializeApp(this.config);
-        this.setSmilesInBox();
+        this.setSmilesInBox(user.id);
     }
 }
 

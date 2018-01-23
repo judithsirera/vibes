@@ -50,6 +50,7 @@ function submitText() {
         firebaseManager.uploadToFirebase(vibe);
         user.updateVibes();
         animateBox();
+        input.value = '';
     }
 }
 
