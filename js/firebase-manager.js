@@ -14,25 +14,12 @@ var user = {
         }
         console.log("User ID", Cookies.get("VIBES_USER_ID"));
 
-        //GET VIBES NUM
-        if (Cookies.get("VIBES_NUM_VIBES")) {
-            this.vibes = Cookies.get("VIBES_NUM_VIBES");
-        }
-        console.log("Vibes", Cookies.get("VIBES_NUM_VIBES"));
+        // //GET VIBES NUM
+        // if (Cookies.get("VIBES_NUM_VIBES")) {
+        //     this.vibes = Cookies.get("VIBES_NUM_VIBES");
+        // }
+        // console.log("Vibes", Cookies.get("VIBES_NUM_VIBES"));
     },
-
-    updateVibes: function (num_of_vibes) {
-        if (num_of_vibes) {
-            this.vibes = num_of_vibes;
-        } else {
-            this.vibes++;
-        }
-        Cookies.set("VIBES_NUM_VIBES", this.vibes, {
-            expires: 700000
-        });
-
-        $(".jar-img").attr("src", "img/jar-" + this.vibes + ".png")
-    }
 }
 
 
@@ -54,8 +41,8 @@ var firebaseManager = {
         return firebase.database().ref('/users/' + user_id).once('value').then(function (messages) {
             if (messages.val()) {
                 //GET NUM OF VIBES ALREADY UPLOADED
-                var l = Object.keys(messages.val()).length;
-                user.updateVibes(l); 
+                user.vibes = Object.keys(messages.val()).length;
+                updateSmilesInBox();
 
                 //GET VIBES FROM YESTERDAY
                 var i = 0;

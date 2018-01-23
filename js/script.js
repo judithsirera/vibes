@@ -24,12 +24,15 @@ function autosize() {
 
 function animateBox() {
     $(".jar-img").addClass("animate");
+    updateSmilesInBox();
+}
+
+function updateSmilesInBox() {
     if (user.vibes < 5) {
         $(".jar-img").attr("src", "img/jar-" + user.vibes + ".png")
     } else {
         $(".jar-img").attr("src", "img/jar-5.png")
     }
-
 }
 
 function showVibe() {
@@ -69,7 +72,7 @@ function submitText() {
         }
 
         firebaseManager.uploadToFirebase(vibe);
-        user.updateVibes();
+        user.vibes++;
 
 
         animateBox();
