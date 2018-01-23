@@ -36,7 +36,8 @@ function showVibe() {
     if (user.data.length > 0) {
         $("#vibe").addClass("hide");
         $("#remembering").attr("class", "show");
-        firebaseManager.downloadOne(user.id);
+    } else {
+        input.value = '';
     }
 }
 
@@ -63,9 +64,9 @@ function submitText() {
 
         firebaseManager.uploadToFirebase(vibe);
         user.updateVibes();
-        animateBox();
-        input.value = '';
 
+
+        animateBox();
         showVibe();
     }
 }

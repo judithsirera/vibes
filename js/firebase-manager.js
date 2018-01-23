@@ -31,7 +31,9 @@ var user = {
             expires: 700000
         });
 
-        $(".jar-img").attr("src", "img/jar-" + user.vibes + ".png")
+        console.log("vibes - ", this.vibes)
+
+        $(".jar-img").attr("src", "img/jar-" + this.vibes + ".png")
     }
 }
 
