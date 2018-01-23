@@ -1,0 +1,112 @@
+body {
+    font-family: 'myFont' !important;
+    font-weight: normal;
+    font-style: normal;
+}
+
+.center {
+    margin: auto;
+    width: 70%;
+    padding: 10px;
+}
+
+#cloud-img {
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
+    width: 15em;
+}
+
+#jar-img {
+    width: 6em;
+}
+
+header {
+    margin-top: 7em
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    font-size: 12px;
+    width: 100%;
+}
+
+textarea {
+    border: none !important;
+    box-shadow: none !important;
+    font-size: 24px;
+    width: 90%;
+    height: 100px;
+    max-height: 300px;
+    margin-bottom: 1em !important;
+    outline: none;
+    resize: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+::-webkit-input-placeholder {
+    font-size: 34px;
+    color: #2A363B;
+    height: 100%;
+    vertical-align: middle;
+}
+
+::-moz-placeholder {
+    /* Firefox 19+ */
+    font-size: 34px;
+    color: #2A363B;
+}
+
+:-ms-input-placeholder {
+    /* IE 10+ */
+    font-size: 34px;
+    color: #2A363B;
+}
+
+:-moz-placeholder {
+    /* Firefox 18- */
+    font-size: 34px;
+    color: #2A363B;
+}
+
+.center-box {
+    display: table;
+    position: absolute;
+    bottom: 8em;
+}
+
+.center-box-inner {
+    width: 200px;
+    height: 100px;
+    display: table-cell;
+    text-align: center;
+    vertical-align: bottom;
+}
+
+#upload {
+    background: none;
+    border: none;
+    animation-play-state: paused;
+    animation: moveBox;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    -webkit-animation: moveBox;
+    -webkit-animation-play-state: paused;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-iteration-count: infinite;
+}
+
+#upload:hover {
+    animation-play-state: running;
+    -webkit-animation-play-state: running;
+    cursor: pointer;
+}
+
+#upload:focus {
+    background: none !important;
+}

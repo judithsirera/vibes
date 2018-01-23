@@ -1,0 +1,46 @@
+@font-face {
+    font-family: 'myFont';
+    src: url('../fonts/thin_king-webfont.woff2') format('woff2'), url('../fonts/thin_king-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.color-99B898 {
+    color: #99B898;
+}
+
+.background-99B898 {
+    background: #99B898;
+}
+
+.color-FECEAB {
+    color: #FECEAB;
+}
+
+.background-FECEAB {
+    background: #FECEAB;
+}
+
+.color-FF847C {
+    color: #FF847C;
+}
+
+.background-FF847C {
+    background: #FF847C;
+}
+
+.color-E84A5F {
+    color: #E84A5F;
+}
+
+.background-E84A5F {
+    background: #E84A5F;
+}
+
+.color-2A363B {
+    color: #2A363B;
+}
+
+.background-2A363B {
+    color: #2A363B;
+}
