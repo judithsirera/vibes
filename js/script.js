@@ -1,5 +1,6 @@
 var daysInAWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-var input = document.getElementById('thought');
+var monthsInYear = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+var input = document.getElementById('vibe');
 
 function appendCharacter(c) {
     switch (c) {
@@ -15,8 +16,6 @@ function appendCharacter(c) {
 function autosize() {
     setTimeout(function () {
         input.style.cssText = 'height:100px; padding:0';
-        // for box-sizing other than "content-box" use:
-        // el.style.cssText = '-moz-box-sizing:content-box';
         if (input.value.length > 0) {
             input.style.cssText = 'height:' + input.scrollHeight + 'px';
         }
@@ -33,6 +32,19 @@ function animateBox() {
 
 }
 
+function showVibe() {
+    if (user.data.length > 0) {
+        $("#vibe").addClass("hide");
+        $("#remembering").attr("class", "show");
+        firebaseManager.downloadOne(user.id);
+    }
+}
+
+function hideVibe() {
+    $("#vibe").attr("class", "center-align");
+    $("#remembering").attr("class", "hide");
+}
+
 function submitText() {
     var text = input.value;
     if (text.length > 0) {
@@ -43,14 +55,18 @@ function submitText() {
             weekDay: daysInAWeek[d.getDay()],
             day: d.getDate(),
             month: d.getMonth() + 1,
+            monthName: monthsInYear[d.getMonth()],
             year: d.getFullYear(),
             text: text,
+            toCompare: d.getFullYear() + "/" + d.getMonth() + "/" + d.getDate()
         }
 
         firebaseManager.uploadToFirebase(vibe);
         user.updateVibes();
         animateBox();
         input.value = '';
+
+        showVibe();
     }
 }
 
@@ -70,14 +86,14 @@ document.getElementById("jar-img").addEventListener("animationend", function (e)
 // Keypress gets the keyCode of the current character not key.
 // e.g. pressing the 'A' key will result in 'a' unless 'Shift' is also held.
 window.addEventListener('keypress', function (e) {
-    if (!$("#thought").is(":focus")) {
+    if (!$("#vibe").is(":focus")) {
         appendCharacter(e.keyCode);
     }
 });
 
 // Use Keydown to get special keys like Backspace, Enter, Esc.
 window.addEventListener('keydown', function (e) {
-    if (!$("#thought").is(":focus")) {
+    if (!$("#vibe").is(":focus")) {
         switch (e.keyCode) {
             case 8: // Backspace
                 e.preventDefault(); // Stops the backspace key from acting like the back button.

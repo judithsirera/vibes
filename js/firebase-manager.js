@@ -1,6 +1,7 @@
 var user = {
     id: "",
     vibes: 0,
+    data: [],
     init: function () {
         //GET ID
         if (!Cookies.get("VIBES_USER_ID")) {
@@ -45,19 +46,28 @@ var firebaseManager = {
         messagingSenderId: "1019159236803"
     },
 
-    downloadOne: function (user_id) {
-        return firebase.database().ref('/users/' + user_id).once('value').then(function (messages) {
-            messages.forEach(function (msg) {
-                console.log(msg.val());
-            });
+    downloadAllData: function (user_id) {
+        var d = new Date();
+        var today = d.getFullYear() + "/" + d.getMonth() + "/" + d.getDate();
 
+        console.log(today);
+        return firebase.database().ref('/users/' + user_id).once('value').then(function (messages) {
+            var i = 0;
+            messages.forEach(function (msg) {
+               if (msg.val().toCompare != today) {
+                   user.data[i] = msg.val();
+                   i++;
+               }
+            });
         });
     },
 
     setSmilesInBox: function (user_id) {
         return firebase.database().ref('/users/' + user_id).once('value').then(function (messages) {
-            var l = Object.keys(messages.val()).length;
-            user.updateVibes(l)
+            if (messages.val()) {
+                var l = Object.keys(messages.val()).length;
+                user.updateVibes(l); 
+            }
         });
     },
 

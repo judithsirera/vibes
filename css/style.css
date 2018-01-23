@@ -5,10 +5,21 @@ body {
     font-style: normal;
 }
 
+p {
+    font-size: 20px;
+}
 
 .center {
     margin: auto;
     width: 60%;
+}
+
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
 }
 
 #cloud-img {
@@ -22,7 +33,7 @@ body {
 }
 
 header {
-    margin-top: 7em
+    margin-top: 5em
 }
 
 footer {
