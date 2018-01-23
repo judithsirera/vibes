@@ -47,7 +47,6 @@ var firebaseManager = {
     },
 
     setupData: function (user_id) {
-        user_id = 98761;
         var d = new Date();
         var today = d.getFullYear() + "/" + d.getMonth() + "/" + d.getDate();
 
