@@ -1,13 +1,3 @@
-// Initialize Firebase
-var config = {
-    apiKey: "AIzaSyBQKyTdcw6sT3qcavOHluVM3Akcg3rIz7s",
-    authDomain: "vibes-d62e9.firebaseapp.com",
-    databaseURL: "https://vibes-d62e9.firebaseio.com",
-    projectId: "vibes-d62e9",
-    storageBucket: "vibes-d62e9.appspot.com",
-    messagingSenderId: "1019159236803"
-};
-
 
 var user = {
     id: "",
@@ -25,11 +15,33 @@ var user = {
 }
 
 
-function uploadToFirebase(vibe) {
-    console.log(vibe);
-    var databaseRef = firebase.database().ref("users/" + user.id).set(vibe);
-    //databaseRef.child(object.timestamp);
-}
+var firebaseManager = {
+    config: {
+        apiKey: "AIzaSyBQKyTdcw6sT3qcavOHluVM3Akcg3rIz7s",
+        authDomain: "vibes-d62e9.firebaseapp.com",
+        databaseURL: "https://vibes-d62e9.firebaseio.com",
+        projectId: "vibes-d62e9",
+        storageBucket: "vibes-d62e9.appspot.com",
+        messagingSenderId: "1019159236803"
+    },
 
-firebase.initializeApp(config);
+    downloadOne: function (user) {
+        return firebase.database().ref('/users/' + "55571").once('value').then(function (messages) {
+            messages.forEach(function (msg) {
+                console.log(msg.val());
+            });
+            
+        });
+    },
+
+    uploadToFirebase: function (vibe) {
+        console.log(vibe);
+        var databaseRef = firebase.database().ref("users/" + user.id + "/" + vibe.timestamp).set(vibe);
+    },
+
+    init: function () {
+        firebase.initializeApp(this.config);   
+    }
+}
+firebaseManager.init();
 user.init();

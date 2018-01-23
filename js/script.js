@@ -37,8 +37,7 @@ function submitText() {
             text: text,
         }
 
-        uploadToFirebase(vibe);
-
+        firebaseManager.uploadToFirebase(vibe);
 
     }
 }
