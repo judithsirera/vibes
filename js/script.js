@@ -25,10 +25,18 @@ function autosize() {
 function submitText() {
     var text = input.value;
     if (text.length > 0) {
-        console.log("submit: " + text)
+        var d = new Date();
+        
+        var timestamp = d.getTime(); 
+        var weekDay = d.getDay();
+        var day = d.getDate();
+        var month = d.getMonth() + 1;
+        var year = d.getFullYear();
+
+        console.log(timestamp + ":" + day + "/" + month + "/" + year);
+
+
     }
-
-
 }
 
 input.addEventListener('keydown', function (e) {
