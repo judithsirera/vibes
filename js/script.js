@@ -1,3 +1,4 @@
+var daysInAWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 var input = document.getElementById('thought');
 
 function appendCharacter(c) {
@@ -26,14 +27,17 @@ function submitText() {
     var text = input.value;
     if (text.length > 0) {
         var d = new Date();
-        
-        var timestamp = d.getTime(); 
-        var weekDay = d.getDay();
-        var day = d.getDate();
-        var month = d.getMonth() + 1;
-        var year = d.getFullYear();
 
-        console.log(timestamp + ":" + day + "/" + month + "/" + year);
+        vibe = {
+            timestamp: d.getTime(),
+            weekDay: daysInAWeek[d.getDay()],
+            day: d.getDate(),
+            month: d.getMonth() + 1,
+            year: d.getFullYear(),
+            text: text,
+        }
+
+        uploadToFirebase(vibe);
 
 
     }

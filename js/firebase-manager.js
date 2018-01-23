@@ -25,5 +25,14 @@ var user = {
 }
 
 
+function uploadToFirebase(vibe) {
+    console.log(vibe);
+    var databaseRef = firebase.database().ref();
+    databaseRef.child(user.id).push(vibe).then(function () {
+        console.log("uploaded");
+    });
+    //databaseRef.child(object.timestamp);
+}
+
 firebase.initializeApp(config);
 user.init();
