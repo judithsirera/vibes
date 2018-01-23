@@ -1,7 +1,8 @@
-
 var user = {
     id: "",
+    vibes: 0,
     init: function () {
+        //GET ID
         if (!Cookies.get("VIBES_USER_ID")) {
             this.id = parseInt(Math.random() * 100000)
             Cookies.set("VIBES_USER_ID", this.id, {
@@ -10,7 +11,26 @@ var user = {
         } else {
             this.id = Cookies.get("VIBES_USER_ID");
         }
-        console.log("Foodalite UserID", Cookies.get("VIBES_USER_ID"));
+        console.log("User ID", Cookies.get("VIBES_USER_ID"));
+
+        //GET VIBES NUM
+        if (Cookies.get("VIBES_NUM_VIBES")) {
+            this.vibes = Cookies.get("VIBES_NUM_VIBES");
+        }
+        console.log("Vibes", Cookies.get("VIBES_NUM_VIBES"));
+    },
+
+    updateVibes: function (num_of_vibes) {
+        if (num_of_vibes) {
+            this.vibes = num_of_vibes;
+        } else {
+            this.vibes++;
+        }
+        Cookies.set("VIBES_NUM_VIBES", this.vibes, {
+            expires: 700000
+        });
+
+        $(".jar-img").attr("src", "img/jar-" + user.vibes + ".png")
     }
 }
 
@@ -30,7 +50,14 @@ var firebaseManager = {
             messages.forEach(function (msg) {
                 console.log(msg.val());
             });
-            
+
+        });
+    },
+
+    setSmilesInBox: function (user_id) {
+        return firebase.database().ref('/users/' + "55571").once('value').then(function (messages) {
+            var l = Object.keys(messages.val()).length;
+            user.updateVibes(l)
         });
     },
 
@@ -40,8 +67,10 @@ var firebaseManager = {
     },
 
     init: function () {
-        firebase.initializeApp(this.config);   
+        firebase.initializeApp(this.config);
+        this.setSmilesInBox();
     }
 }
-firebaseManager.init();
+
 user.init();
+firebaseManager.init();

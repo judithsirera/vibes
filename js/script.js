@@ -23,6 +23,16 @@ function autosize() {
     }, 0);
 }
 
+function animateBox() {
+    $(".jar-img").addClass("animate");
+    if (user.vibes < 5) {
+        $(".jar-img").attr("src", "img/jar-" + user.vibes + ".png")
+    } else {
+        $(".jar-img").attr("src", "img/jar-5.png")
+    }
+
+}
+
 function submitText() {
     var text = input.value;
     if (text.length > 0) {
@@ -38,7 +48,8 @@ function submitText() {
         }
 
         firebaseManager.uploadToFirebase(vibe);
-
+        user.updateVibes();
+        animateBox();
     }
 }
 
@@ -49,6 +60,11 @@ input.addEventListener('keydown', function (e) {
 $("#upload").on("click", function (e) {
     submitText();
 })
+
+document.getElementById("jar-img").addEventListener("animationend", function (e) {
+    $(".jar-img").removeClass("animate");
+})
+
 
 // Keypress gets the keyCode of the current character not key.
 // e.g. pressing the 'A' key will result in 'a' unless 'Shift' is also held.

@@ -20,7 +20,7 @@ body {
     width: 15em;
 }
 
-#jar-img {
+.jar-img {
     width: 6em;
 }
 
@@ -88,25 +88,24 @@ textarea {
     vertical-align: bottom;
 }
 
-#upload {
+.jar-img {
     background: none;
     border: none;
-    animation-play-state: paused;
-    animation: moveBox;
-    animation-duration: 2s;
-    animation-iteration-count: infinite;
-    -webkit-animation: moveBox;
-    -webkit-animation-play-state: paused;
-    -webkit-animation-duration: 1s;
-    -webkit-animation-iteration-count: infinite;
 }
 
-#upload:hover {
-    animation-play-state: running;
-    -webkit-animation-play-state: running;
+.animate {
+    animation: moveBox;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    -webkit-animation: moveBox;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-iteration-count: 1;
+}
+
+.jar-img:hover {
     cursor: pointer;
 }
 
-#upload:focus {
+.jar-img:focus {
     background: none !important;
 }
