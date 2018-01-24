@@ -125,14 +125,14 @@ var goodVibes = {
 
         if (user.data.length > 0) {
             //show old vibe
-            var idx = Math.floor(Math.random(user.data.length * 10, 0));
+            var idx = Math.floor(Math.random() * user.data.length);
             $("#tbt-title").html("Do you remember?");
             $("#tbt-date").html(user.data[idx].weekDay + ", " + user.data[idx].monthName + " " + user.data[idx].day + " of " + user.data[idx].year);
             $("#tbt-text").html(decrypt(user.data[idx].text));
 
         } else {
             //show curiousity
-            var idx = Math.floor(Math.random(curiousity.length * 10, 0));
+            var idx = Math.floor(Math.random() * curiousity.length);
             $("#tbt-title").html("Did you know");
             $("#tbt-text").html(curiousity[idx] + "?");
         }
