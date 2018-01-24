@@ -50,8 +50,8 @@ var user = {
         $("#login").remove();
         $(".center-box").css("z-index", "1");
 
-        firebaseManager.initData(this.id);
         collectBtn.init();
+        firebaseManager.initData(this.id);
         keyboard.init();
     },
 
@@ -65,7 +65,9 @@ var user = {
         // User exist
         if (this.checkUser()) {
             $("#login").remove();
+            
             collectBtn.init();
+            firebaseManager.initData(this.id);
             keyboard.init();
         } else {
             $("#login").css("display", "block");
@@ -94,7 +96,7 @@ var firebaseManager = {
         var d = new Date();
         var today = d.getFullYear() + "/" + d.getMonth() + "/" + d.getDate();
 
-        return firebase.database().ref('/users/' + user_id + "/messages/").once('value').then(function (messages) {
+        return firebase.database().ref('/users/' + user_id + "/vibes/").once('value').then(function (messages) {
             if (messages.val()) {
                 //GET NUM OF VIBES ALREADY UPLOADED
                 user.vibes = Object.keys(messages.val()).length;

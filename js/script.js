@@ -9,7 +9,7 @@ var curiousity = [
     "Smiles use from 5 to 53 facial muscles",
     "Babies are born with the ability to smile",
     "Smiles can be recognized from 300feet away",
-    "There are 19 different types of smiles",
+    "There are 2 different types of smiles: Duchene or genuine and non-Duchene or social",
     "If you smile, your neighboors have 34% increased change of becoming happy",
     "If you are smiling you look more attractive and intelligent",
     "When you smile, a friend living 1mile can be 25% more happy",
@@ -40,6 +40,7 @@ var collectBtn = {
     btn: null,
 
     setSmiles: function () {
+                
         if (user.vibes < 5) {
             this.btn.attr("src", "img/jar-" + user.vibes + ".png");
         } else {
