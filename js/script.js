@@ -43,7 +43,7 @@ function showVibe() {
 
         var idx = Math.floor(Math.random(user.data.length * 10, 0));
         $("#tbt-date").html(user.data[idx].weekDay + ", " + user.data[idx].monthName + " " + user.data[idx].day + " of " + user.data[idx].year);
-        $("#tbt-text").html(user.data[idx].text);
+        $("#tbt-text").html(decrypt(user.data[idx].text));
 
         $("#upload").off("click", submitText).on("click", hideVibe);
     }
@@ -68,17 +68,26 @@ function submitText() {
             month: d.getMonth() + 1,
             monthName: monthsInYear[d.getMonth()],
             year: d.getFullYear(),
-            text: text,
+            text: encrypt(text),
             toCompare: d.getFullYear() + "/" + d.getMonth() + "/" + d.getDate()
         }
 
         firebaseManager.uploadToFirebase(vibe);
         user.vibes++;
 
-
         animateBox();
         showVibe();
     }
+}
+
+function encrypt(text) {
+    var e = CryptoJS.AES.encrypt(text, user.id);
+    return e.toString();
+}
+
+function decrypt(text) {
+    d = CryptoJS.AES.decrypt(text.toString(), user.id);
+    return d.toString(CryptoJS.enc.Utf8);
 }
 
 function start() {
