@@ -36,8 +36,8 @@ var user = {
     },
 
     login: function (e) {
-        var username = $('#user_name').val();
-        var color = $('#user_color').val();
+        var username = $('#user_name').val().toUpperCase();
+        var color = $('#user_color').val().toUpperCase();
 
         if (username.length > 0 && color.length > 0) {
             firebaseManager.checkUserInDB(username, color);
