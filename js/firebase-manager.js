@@ -65,7 +65,7 @@ var user = {
         // User exist
         if (this.checkUser()) {
             $("#login").remove();
-            
+
             collectBtn.init();
             firebaseManager.initData(this.id);
             keyboard.init();
@@ -105,7 +105,9 @@ var firebaseManager = {
                 //GET VIBES FROM MONTH AGO
                 var i = 0;
                 messages.forEach(function (msg) {
-                    if (msg.val().toCompare != today) {
+                    monthAgo = msg.val().month - 1 == 0 ? 12 : msg.val().month - 1;
+                    
+                    if (msg.val().month == monthAgo) {
                         user.data[i] = msg.val();
                         i++;
                     }
@@ -136,7 +138,7 @@ var firebaseManager = {
         })
     },
 
-    uploadToFirebase: function (vibe) {        
+    uploadToFirebase: function (vibe) {
         var databaseRef = firebase.database().ref("/users/" + user.id + "/vibes/" + vibe.timestamp).set(vibe);
     },
 
