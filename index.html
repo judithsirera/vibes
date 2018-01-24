@@ -21,6 +21,18 @@
 
 <body class="background-99B898">
 
+    <section id="welcome" class="background-FF847C">
+        <div class="center">
+            <img id="welcome-img" class="responsive-img center" src="img/logo.png" alt="">
+
+            <form action="" method="post">
+                <h5 class="center color-2A363B">Write your phone num as username:</h5>
+                <input class="center-align" type="text" name="user_name" id="user_name" placeholder="ex:6273958473">
+                <h3 class="center color-2A363B background-FECEAB" id="start">Start</h3>
+            </form>
+        </div>
+    </section>
+
     <header>
         <div class="center">
             <img id="cloud-img" class="responsive-img center" src="img/cloud.png" alt="">
@@ -29,7 +41,7 @@
 
     <div class="center">
         <form action="" method="post">
-            <textarea data-gramm_editor="false" class="center-align" name="thought" id="vibe" placeholder="Write here what made you happy today?"
+            <textarea data-gramm_editor="false" class="center-align" name="vime" id="vibe" placeholder="Write here what made you happy today?"
                 rows="1"></textarea>
 
             <div id="tbt" class="hide">
@@ -66,6 +78,9 @@
     <script src="js/script.js"></script>
 
 
+    <script type="text/javascript">
+        welcome.init();
+    </script>
 
 </body>
 

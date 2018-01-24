@@ -56,6 +56,9 @@ function hideVibe() {
 }
 
 function submitText() {
+    console.log("hello");
+
+
     var text = input.value;
     if (text.length > 0) {
         var d = new Date();
@@ -81,38 +84,63 @@ function submitText() {
     }
 }
 
-input.addEventListener('keydown', function (e) {
-    autosize();
-})
+function start() {
+    firebaseManager.init();
 
-$("#upload").on("click", submitText)
+    input.addEventListener('keydown', function (e) {
+        autosize();
+    })
 
-document.getElementById("jar-img").addEventListener("animationend", function (e) {
-    $(".jar-img").removeClass("animate");
-})
+    $("#upload").on("click touchstart", submitText)
+
+    document.getElementById("jar-img").addEventListener("animationend", function (e) {
+        $(".jar-img").removeClass("animate");
+    })
 
 
-// Keypress gets the keyCode of the current character not key.
-// e.g. pressing the 'A' key will result in 'a' unless 'Shift' is also held.
-window.addEventListener('keypress', function (e) {
-    if (!$("#vibe").is(":focus")) {
-        appendCharacter(e.keyCode);
-    }
-});
-
-// Use Keydown to get special keys like Backspace, Enter, Esc.
-window.addEventListener('keydown', function (e) {
-    if (!$("#vibe").is(":focus")) {
-        switch (e.keyCode) {
-            case 8: // Backspace
-                e.preventDefault(); // Stops the backspace key from acting like the back button.
-                appendCharacter(e.keyCode);
-                break;
-            case 13:
-                e.preventDefault();
-                submitText();
-                break;
+    // Keypress gets the keyCode of the current character not key.
+    // e.g. pressing the 'A' key will result in 'a' unless 'Shift' is also held.
+    window.addEventListener('keypress', function (e) {
+        if (!$("#vibe").is(":focus")) {
+            appendCharacter(e.keyCode);
         }
-    }
+    });
 
-});
+    // Use Keydown to get special keys like Backspace, Enter, Esc.
+    window.addEventListener('keydown', function (e) {
+        if (!$("#vibe").is(":focus")) {
+            switch (e.keyCode) {
+                case 8: // Backspace
+                    e.preventDefault(); // Stops the backspace key from acting like the back button.
+                    appendCharacter(e.keyCode);
+                    break;
+                case 13:
+                    e.preventDefault();
+                    submitText();
+                    break;
+            }
+        }
+
+    });
+}
+
+
+var welcome = {
+    init: function () {
+        if (!user.checkUser()) {
+            this.addWelcomeEvents();
+        }
+    },
+
+    addWelcomeEvents: function() {
+        $('#start').on('click', function (e) {
+            var username = $('#user_name').val();
+            if (username.length > 0) {
+                user.setUser(username);   
+                $("#welcome").remove();
+                start();
+            }
+        })
+    },
+
+}
