@@ -2,26 +2,9 @@ var user = {
     id: "",
     vibes: 0,
     data: [],
-    // init: function () {
-    //     //GET ID
-    //     if (!Cookies.get("VIBES_USER_ID")) {
-    //         this.id = parseInt(Math.random() * 100000)
-    //         Cookies.set("VIBES_USER_ID", this.id, {
-    //             expires: 700000
-    //         });
-    //     } else {
-    //         this.id = Cookies.get("VIBES_USER_ID");
-    //     }
-    //     console.log("User ID", Cookies.get("VIBES_USER_ID"));
-
-    //     // //GET VIBES NUM
-    //     // if (Cookies.get("VIBES_NUM_VIBES")) {
-    //     //     this.vibes = Cookies.get("VIBES_NUM_VIBES");
-    //     // }
-    //     // console.log("Vibes", Cookies.get("VIBES_NUM_VIBES"));
-    // },
 
     checkUser: function () {
+        console.log(Cookies.get("VIBES_USER_ID"));
         if (Cookies.get("VIBES_USER_ID")) {
             this.id = Cookies.get("VIBES_USER_ID");
             return true;
