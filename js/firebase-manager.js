@@ -1,3 +1,9 @@
+/**
+ * USER
+ * - CheckUser
+ * - SetUser
+ * - SwitchUser
+ */
 var user = {
     id: "",
     vibes: 0,
@@ -9,17 +15,69 @@ var user = {
             return true;
         }
         return false;
-    }, 
+    },
 
     setUser: function (newUser) {
         this.id = newUser;
         Cookies.set("VIBES_USER_ID", this.id, {
             expires: 700000
         });
+    },
+
+    switchUser: function () {
+        if (Cookies.get("VIBES_USER_ID")) {
+            Cookies.remove("VIBES_USER_ID")
+        }
+        location.reload();
+    },
+
+    newVibe: function () {
+        this.vibes++;
+    },
+
+    login: function (e) {
+        var username = $('#user_name').val();
+        var color = $('#user_color').val();
+
+        if (username.length > 0 && color.length > 0) {
+            firebaseManager.checkUserInDB(username, color);
+        }
+    },
+
+    successLogin: function (username) {
+        user.setUser(username);
+
+        $("#login").remove();
+        $(".center-box").css("z-index", "1");
+
+        firebaseManager.initData(this.id);
+        collectBtn.init();
+        keyboard.init();
+    },
+
+    errorLogin: function () {
+        $("#login-error").css("visibility", "visible");
+    },
+
+    init: function () {
+        // User exist
+        if (this.checkUser()) {
+            $("#login").remove();
+            collectBtn.init();
+            keyboard.init();
+        } else {
+            $("#login").css("display", "block");
+            $("#start").on("click", this.login);
+        }
     }
 }
 
-
+/**
+ * FIREBASE MANAGER
+ * - SetupData
+ * - UploadToFirebase
+ * - Init
+ */
 var firebaseManager = {
     config: {
         apiKey: "AIzaSyBQKyTdcw6sT3qcavOHluVM3Akcg3rIz7s",
@@ -30,7 +88,7 @@ var firebaseManager = {
         messagingSenderId: "1019159236803"
     },
 
-    setupData: function (user_id) {
+    initData: function (user_id) {
         var d = new Date();
         var today = d.getFullYear() + "/" + d.getMonth() + "/" + d.getDate();
 
@@ -38,9 +96,9 @@ var firebaseManager = {
             if (messages.val()) {
                 //GET NUM OF VIBES ALREADY UPLOADED
                 user.vibes = Object.keys(messages.val()).length;
-                updateSmilesInBox();
+                collectBtn.setSmiles();
 
-                //GET VIBES FROM YESTERDAY
+                //GET VIBES FROM MONTH AGO
                 var i = 0;
                 messages.forEach(function (msg) {
                     if (msg.val().toCompare != today) {
@@ -52,12 +110,34 @@ var firebaseManager = {
         });
     },
 
+    registerUser: function (username, color) {
+        var password = {
+            "password": goodVibes.encrypt(color),
+            "vibes": ""
+        };
+        var databaseRef = firebase.database().ref("users/" + username).set(password);
+    },
+
+    checkUserInDB: function (user_id, color) {
+
+        firebase.database().ref('/users/' + user_id).once('value').then(function (u) {
+            if (u.val() == null) {
+                firebaseManager.registerUser(user_id, color)
+                user.successLogin(user_id);
+            } else if (goodVibes.decrypt(u.val().password) != color) {
+                //there's an error
+                user.errorLogin();
+            } else {
+                user.successLogin(user_id);
+            }
+        })
+    },
+
     uploadToFirebase: function (vibe) {
-        var databaseRef = firebase.database().ref("users/" + user.id + "/messages/" + vibe.timestamp).set(vibe);
+        var databaseRef = firebase.database().ref("/users/" + user.id + "/vibes/" + vibe.timestamp).set(vibe);
     },
 
     init: function () {
         firebase.initializeApp(this.config);
-        this.setupData(user.id);
     }
 }
