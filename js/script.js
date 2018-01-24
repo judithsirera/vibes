@@ -1,159 +1,179 @@
+
 var daysInAWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 var monthsInYear = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-var input = document.getElementById('vibe');
 
-// function appendCharacter(c) {
-//     switch (c) {
-//         case 8: // Backspace
-//             input.value = input.value.slice(0, -1);
-//             break;
-//         default:
-//             input.value = input.value + String.fromCharCode(c);
-//     }
-//     autosize();
-// }
 
-// function autosize() {
-//     setTimeout(function () {
-//         input.style.cssText = 'height:100px; padding:0';
-//         if (input.value.length > 0) {
-//             input.style.cssText = 'height:' + input.scrollHeight + 'px';
-//         }
-//     }, 0);
-// }
+/**
+ * COLLECT BTN
+ * - SetSmiles
+ * - Animate
+ * - init
+ */
+var collectBtn = {
+    btn: null,
 
-// function animateBox() {
-//     $(".jar-img").addClass("animate");
-//     updateSmilesInBox();
-// }
+    setSmiles: function () {
+        if (user.vibes < 5) {
+            this.btn.attr("src", "img/jar-" + user.vibes + ".png");
+        } else {
+            this.btn.attr("src", "img/jar-5.png");
+        }
+    }, 
 
-// function updateSmilesInBox() {
-//     if (user.vibes < 5) {
-//         $(".jar-img").attr("src", "img/jar-" + user.vibes + ".png")
-//     } else {
-//         $(".jar-img").attr("src", "img/jar-5.png")
-//     }
-// }
+    animate: function () {
+        $(this.btn).addClass("animate");
+        this.setSmiles();
+    },
 
-function showVibe() {
-    input.value = '';
-    if (user.data.length > 0) {
-        $("#vibe").addClass("hide");
-        $("#tbt").attr("class", "show");
+    init: function () {
+        
+        this.btn = $(".jar-img");
+        $(this.btn).on("animationend", function (e) {
+            $(".jar-img").removeClass("animate");
+        });
+        
+        $("#upload").on("click", goodVibes.submitVibe);
 
-        var idx = Math.floor(Math.random(user.data.length * 10, 0));
-        $("#tbt-date").html(user.data[idx].weekDay + ", " + user.data[idx].monthName + " " + user.data[idx].day + " of " + user.data[idx].year);
-        $("#tbt-text").html(decrypt(user.data[idx].text));
-
-        $("#upload").off("click", submitText).on("click", hideVibe);
     }
 }
 
-function hideVibe() {
-    $("#vibe").attr("class", "center-align");
-    $("#tbt").attr("class", "hide");
-    $("#upload").on("click", submitText)
-}
+/**
+ * GOODVIBES
+ * - SetNewVibe
+ * - Encrypt
+ * - Decrypt
+ */
+var goodVibes = {
+    vibe: null,
+    input: null,
 
-// function submitText() {
-//     var text = input.value;
-//     if (text.length > 0) {
-//         var d = new Date();
-//         var timestamp_ = d.getTime();
+    submitVibe: function () {
+        var text = goodVibes.input.val();
+        if (text.length > 0) {
+            var d = new Date();
 
-//         vibe = {
-//             timestamp: d.getTime(),
-//             weekDay: daysInAWeek[d.getDay()],
-//             day: d.getDate(),
-//             month: d.getMonth() + 1,
-//             monthName: monthsInYear[d.getMonth()],
-//             year: d.getFullYear(),
-//             text: encrypt(text),
-//             toCompare: d.getFullYear() + "/" + d.getMonth() + "/" + d.getDate()
-//         }
+            goodVibes.setNewVibe(d, text);
 
-//         firebaseManager.uploadToFirebase(vibe);
-//         user.vibes++;
+            firebaseManager.uploadToFirebase(goodVibes.vibe);
+            user.newVibe();
 
-//         animateBox();
-//         showVibe();
-//     }
-// }
-
-// function encrypt(text) {
-//     var e = CryptoJS.AES.encrypt(text, user.id);
-//     return e.toString();
-// }
-
-// function decrypt(text) {
-//     d = CryptoJS.AES.decrypt(text.toString(), user.id);
-//     return d.toString(CryptoJS.enc.Utf8);
-// }
-
-function start() {
-    // firebaseManager.init();
-
-    // input.addEventListener('keydown', function (e) {
-    //     autosize();
-    // })
-
-    // $("#upload").on("click", submitText)
-
-    // document.getElementById("jar-img").addEventListener("animationend", function (e) {
-    //     $(".jar-img").removeClass("animate");
-    // })
-
-
-    // Keypress gets the keyCode of the current character not key.
-    // e.g. pressing the 'A' key will result in 'a' unless 'Shift' is also held.
-    window.addEventListener('keypress', function (e) {
-        if (!$("#vibe").is(":focus")) {
-            appendCharacter(e.keyCode);
+            collectBtn.animate();
+            goodVibes.input.val("");
+            goodVibes.showFeedBack();
         }
-    });
+    },
 
-    // Use Keydown to get special keys like Backspace, Enter, Esc.
-    window.addEventListener('keydown', function (e) {
-        if (!$("#vibe").is(":focus")) {
-            switch (e.keyCode) {
-                case 8: // Backspace
-                    e.preventDefault(); // Stops the backspace key from acting like the back button.
-                    appendCharacter(e.keyCode);
-                    break;
-                case 13:
-                    e.preventDefault();
-                    submitText();
-                    break;
-            }
+    setNewVibe: function (d, text) {
+        this.vibe = {
+            timestamp: d.getTime(),
+            weekDay: daysInAWeek[d.getDay()],
+            day: d.getDate(),
+            month: d.getMonth() + 1,
+            monthName: monthsInYear[d.getMonth()],
+            year: d.getFullYear(),
+            text: this.encrypt(text),
+            toCompare: d.getFullYear() + "/" + d.getMonth() + "/" + d.getDate()
         }
 
-    });
-}
-
-
-var welcome = {
-    init: function () {
-        if (!user.checkUser()) {
-            $("#welcome").css("display", "block");
-            this.addWelcomeEvents();
-        } else {
-            $("#welcome").remove();
-            $(".center-box").css("z-index", "1");
-            start();
-        }
+        
         
     },
 
-    addWelcomeEvents: function() {
-        $('#start').on('click', function (e) {
-            var username = $('#user_name').val();
-            if (username.length > 0) {
-                user.setUser(username);
-                $("#welcome").remove();
-                $(".center-box").css("z-index", "1");
-                start();
-            }
-        })
+    encrypt: function (textToEncrypt) {
+        var e = CryptoJS.AES.encrypt(textToEncrypt, user.id);
+        return e.toString();
     },
 
+    decrypt: function (textToDecrypt) {
+        d = CryptoJS.AES.decrypt(textToDecrypt.toString(), user.id);
+        return d.toString(CryptoJS.enc.Utf8);
+    },
+
+    showFeedBack: function () {
+        
+        this.input.addClass("hide");
+        $("#tbt").attr("class", "show");
+
+        $("#upload").off("click", goodVibes.submitVibe).on("click", goodVibes.hideFeedback);
+
+        if (user.data.length > 0) {
+            //show old vibe
+            var idx = Math.floor(Math.random(user.data.length * 10, 0));
+            $("#tbt-title").html("Do you remember?");
+            $("#tbt-date").html(user.data[idx].weekDay + ", " + user.data[idx].monthName + " " + user.data[idx].day + " of " + user.data[idx].year);
+            $("#tbt-text").html(decrypt(user.data[idx].text));
+
+        } else {
+            //show curiousity
+            $("#tbt-title").html("Interesting fact");
+        }
+    },
+
+    hideFeedback: function () {
+        $("#vibe").attr("class", "center-align");
+        $("#tbt").attr("class", "hide");
+        $("#upload").on("click", goodVibes.submitVibe);
+    },
+
+    init: function () {
+        this.input = $("#vibe");
+    }
+}
+
+
+/**
+ * keyboard
+ * - appendCharacter
+ * - autosize
+ * - init
+ */
+var keyboard = {
+    appendCharacter: function (c) {
+        switch (c) {
+            case 8: // Backspace
+                goodVibes.input.val(goodVibes.input.val().slice(0, -1));
+                break;
+            default:
+                goodVibes.input.val(goodVibes.input.val() + String.fromCharCode(c));
+        }
+    },
+
+    autosize: function () {
+        setTimeout(function () {
+            goodVibes.input.css("height", "100px").css("padding", "0");
+            if (goodVibes.input.val().length > 0) {
+                goodVibes.input.css("height", goodVibes.input.scrollHeight + "px");
+            }
+        }, 0);
+    },
+
+    keydownEvent: function (e) {
+        if (!$(goodVibes.input).is(":focus")) {
+            switch (e.keyCode) {
+                case 8: // Backspace
+                    e.preventDefault(); // Stops the backspace key from acting like the back button.
+                    keyboard.appendCharacter(e.keyCode);
+                    break;
+                case 13:
+                    e.preventDefault();
+                    goodVibes.submitVibe();
+                    break;
+            }
+        }
+    },
+
+    keypressEvent: function (e) {
+        if (!$(goodVibes.input).is(":focus")) {
+            keyboard.appendCharacter(e.keyCode);
+        }
+    },
+
+    init: function () {
+        $(goodVibes.input).on("keydown", function (e) {
+            keyboard.autosize();
+        })
+        $(window).on('keydown', this.keydownEvent);
+        $(window).on('keypress', this.keypressEvent);
+
+    }
 }

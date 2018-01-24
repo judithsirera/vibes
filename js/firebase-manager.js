@@ -121,7 +121,6 @@ var firebaseManager = {
     },
 
     checkUserInDB: function (user_id, color) {
-
         firebase.database().ref('/users/' + user_id).once('value').then(function (u) {
             if (u.val() == null) {
                 firebaseManager.registerUser(user_id, color)
@@ -135,7 +134,7 @@ var firebaseManager = {
         })
     },
 
-    uploadToFirebase: function (vibe) {
+    uploadToFirebase: function (vibe) {        
         var databaseRef = firebase.database().ref("/users/" + user.id + "/vibes/" + vibe.timestamp).set(vibe);
     },
 
