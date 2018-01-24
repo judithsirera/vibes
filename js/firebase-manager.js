@@ -56,7 +56,6 @@ var firebaseManager = {
             if (messages.val()) {
                 //GET NUM OF VIBES ALREADY UPLOADED
                 user.vibes = Object.keys(messages.val()).length;
-                console.log(messages.val());
                 updateSmilesInBox();
 
                 //GET VIBES FROM YESTERDAY

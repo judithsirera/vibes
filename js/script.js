@@ -56,9 +56,6 @@ function hideVibe() {
 }
 
 function submitText() {
-    console.log("hello");
-
-
     var text = input.value;
     if (text.length > 0) {
         var d = new Date();
@@ -91,7 +88,7 @@ function start() {
         autosize();
     })
 
-    $("#upload").on("click touchstart", submitText)
+    $("#upload").on("click", submitText)
 
     document.getElementById("jar-img").addEventListener("animationend", function (e) {
         $(".jar-img").removeClass("animate");
@@ -131,6 +128,7 @@ var welcome = {
             this.addWelcomeEvents();
         }
         $("#welcome").remove();
+        $(".center-box").css("z-index", "1");
         start();
     },
 
@@ -138,7 +136,7 @@ var welcome = {
         $('#start').on('click', function (e) {
             var username = $('#user_name').val();
             if (username.length > 0) {
-                user.setUser(username); 
+                user.setUser(username);
             }
         })
     },
