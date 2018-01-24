@@ -130,15 +130,15 @@ var welcome = {
         if (!user.checkUser()) {
             this.addWelcomeEvents();
         }
+        $("#welcome").remove();
+        start();
     },
 
     addWelcomeEvents: function() {
         $('#start').on('click', function (e) {
             var username = $('#user_name').val();
             if (username.length > 0) {
-                user.setUser(username);   
-                $("#welcome").remove();
-                start();
+                user.setUser(username); 
             }
         })
     },
