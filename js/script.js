@@ -1,7 +1,34 @@
-
 var daysInAWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 var monthsInYear = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+var curiousity = [
+    "Forcing yourself to smile can boost your mood",
+    "Smiling can improve your immune system",
+    "Smiles and positivity are contagious",
+    "Smiling releases neuropeptides that help to fight the stress",
+    "It's easier to smile than to frown",
+    "Smiles use from 5 to 53 facial muscles",
+    "Babies are born with the ability to smile",
+    "Smiles can be recognized from 300feet away",
+    "There are 19 different types of smiles",
+    "If you smile, your neighboors have 34% increased change of becoming happy",
+    "If you are smiling you look more attractive and intelligent",
+    "When you smile, a friend living 1mile can be 25% more happy",
+    "Happiness can make you live longer and improve your heart healthiness",
+    "The hippocampus area of your brain is responsable of happiness",
+    "Happiness is maximized at 13.9ºC or 57ºF",
+    "Sleep-deprived people only remembers around 31% of possitive words",
+    "A sense of community and celebrations contribute to happiness",
+    "Thinking positive will make trials easier to bear",
+    "When you were born, you were, for a moment, the youngest person on earth",
+    "Cows have best friends and they tend to spend most of their time together",
+    "Blind people smile even though they’ve never seen anyone else smile",
+    "The Beatles used the word “love” 613 times in their songs",
+    "Macaques in Japan use coins to buy vending machine snacks",
+    "Kissing burns 2 calories a minute",
+    "The animal Quokka, in Australia, is considered the world’s happiest animal",
 
+
+]
 
 /**
  * COLLECT BTN
@@ -18,7 +45,7 @@ var collectBtn = {
         } else {
             this.btn.attr("src", "img/jar-5.png");
         }
-    }, 
+    },
 
     animate: function () {
         $(this.btn).addClass("animate");
@@ -26,12 +53,12 @@ var collectBtn = {
     },
 
     init: function () {
-        
+
         this.btn = $(".jar-img");
         $(this.btn).on("animationend", function (e) {
             $(".jar-img").removeClass("animate");
         });
-        
+
         $("#upload").on("click", goodVibes.submitVibe);
 
     }
@@ -75,8 +102,8 @@ var goodVibes = {
             toCompare: d.getFullYear() + "/" + d.getMonth() + "/" + d.getDate()
         }
 
-        
-        
+
+
     },
 
     encrypt: function (textToEncrypt) {
@@ -90,7 +117,7 @@ var goodVibes = {
     },
 
     showFeedBack: function () {
-        
+
         this.input.addClass("hide");
         $("#tbt").attr("class", "show");
 
@@ -105,7 +132,9 @@ var goodVibes = {
 
         } else {
             //show curiousity
-            $("#tbt-title").html("Interesting fact");
+            var idx = Math.floor(Math.random(curiousity.length * 10, 0));
+            $("#tbt-title").html("Did you know");
+            $("#tbt-text").html(curiousity[idx] + "?");
         }
     },
 
