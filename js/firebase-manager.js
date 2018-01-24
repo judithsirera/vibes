@@ -4,7 +4,6 @@ var user = {
     data: [],
 
     checkUser: function () {
-        console.log(Cookies.get("VIBES_USER_ID"));
         if (Cookies.get("VIBES_USER_ID")) {
             this.id = Cookies.get("VIBES_USER_ID");
             return true;
