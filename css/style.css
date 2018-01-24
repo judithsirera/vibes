@@ -50,6 +50,7 @@ textarea {
     width: 90%;
     height: 200px;
     max-height: 300px;
+    min-height: 200px;
     margin: 1em 0em 1em 0em !important;
     outline: none;
     resize: none;
