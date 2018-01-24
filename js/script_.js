@@ -149,7 +149,3 @@ var keyboard = {
 
     }
 }
-
-/**
- * KEYBOARD
- */

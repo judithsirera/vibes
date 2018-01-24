@@ -60,6 +60,8 @@ var user = {
     },
 
     init: function () {
+        $("#switchBtn").on("click", this.switchUser);
+
         // User exist
         if (this.checkUser()) {
             $("#login").remove();
