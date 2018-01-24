@@ -125,11 +125,14 @@ function start() {
 var welcome = {
     init: function () {
         if (!user.checkUser()) {
+            $("#welcome").css("display", "block");
             this.addWelcomeEvents();
+        } else {
+            $("#welcome").remove();
+            $(".center-box").css("z-index", "1");
+            start();
         }
-        $("#welcome").remove();
-        $(".center-box").css("z-index", "1");
-        start();
+        
     },
 
     addWelcomeEvents: function() {
@@ -137,6 +140,9 @@ var welcome = {
             var username = $('#user_name').val();
             if (username.length > 0) {
                 user.setUser(username);
+                $("#welcome").remove();
+                $(".center-box").css("z-index", "1");
+                start();
             }
         })
     },
