@@ -59,6 +59,7 @@ function submitText() {
     var text = input.value;
     if (text.length > 0) {
         var d = new Date();
+        var timestamp_ = d.getTime();
 
         vibe = {
             timestamp: d.getTime(),
