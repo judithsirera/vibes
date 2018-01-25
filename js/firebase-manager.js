@@ -64,11 +64,7 @@ var user = {
 
         // User exist
         if (this.checkUser()) {
-            $("#login").remove();
-
-            collectBtn.init();
-            firebaseManager.initData(this.id);
-            keyboard.init();
+            successLogin(this.id);
         } else {
             $("#login").css("display", "block");
             $("#start").on("click", this.login);
@@ -106,7 +102,7 @@ var firebaseManager = {
                 var i = 0;
                 messages.forEach(function (msg) {
                     monthAgo = msg.val().month - 1 == 0 ? 12 : msg.val().month - 1;
-                    
+
                     if (msg.val().month == monthAgo) {
                         user.data[i] = msg.val();
                         i++;
