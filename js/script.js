@@ -56,6 +56,8 @@ var collectBtn = {
         this.btn = $(".jar-img");
         $(this.btn).on("animationend", function (e) {
             $(".jar-img").removeClass("animate");
+            $("#upload").addClass("hide");
+            $("#back").removeClass("hide");
         });
 
         $("#upload").on("click", goodVibes.submitVibe);
@@ -120,7 +122,7 @@ var goodVibes = {
         this.input.addClass("hide");
         $("#tbt").attr("class", "show");
 
-        $("#upload").off("click", goodVibes.submitVibe).on("click", goodVibes.hideFeedback);
+        // $("#upload").off("click", goodVibes.submitVibe).on("click", goodVibes.hideFeedback);
 
         if (user.data.length > 0) {
             //show old vibe

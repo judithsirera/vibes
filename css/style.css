@@ -97,10 +97,15 @@ textarea {
     vertical-align: bottom;
 }
 
-.jar-img {
+.jar-img,
+.back-img {
     width: 5em;
     background: none;
     border: none;
+}
+
+.back-img {
+    width: 7em;
 }
 
 .animate {
@@ -112,11 +117,13 @@ textarea {
     -webkit-animation-iteration-count: 1;
 }
 
-.jar-img:hover {
+.jar-img:hover,
+.back-img:hover {
     cursor: pointer;
 }
 
-.jar-img:focus {
+.jar-img:focus,
+.back-img:focus {
     background: none !important;
 }
 
@@ -137,6 +144,9 @@ textarea {
     }
     .jar-img {
         width: 4em;
+    }
+    .back-img {
+        width: 6em;
     }
     .center-box {
         bottom: 4em;
