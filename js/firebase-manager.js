@@ -64,7 +64,7 @@ var user = {
 
         // User exist
         if (this.checkUser()) {
-            successLogin(this.id);
+            this.successLogin(this.id);
         } else {
             $("#login").css("display", "block");
             $("#start").on("click", this.login);
