@@ -61,6 +61,7 @@ var collectBtn = {
         });
 
         $("#upload").on("click", goodVibes.submitVibe);
+        $("#back").on("click", goodVibes.hideFeedback);
 
     }
 }
@@ -122,7 +123,7 @@ var goodVibes = {
         this.input.addClass("hide");
         $("#tbt").attr("class", "show");
 
-        // $("#upload").off("click", goodVibes.submitVibe).on("click", goodVibes.hideFeedback);
+        $("#upload").off("click", goodVibes.submitVibe);
 
         if (user.data.length > 0) {
             //show old vibe
@@ -135,13 +136,15 @@ var goodVibes = {
             //show curiousity
             var idx = Math.floor(Math.random() * curiousity.length);
             $("#tbt-title").html("Did you know");
-            $("#tbt-text").html(curiousity[idx] + "?");
+            $("#tbt-text").html(curiousity[idx]);
         }
     },
 
     hideFeedback: function () {
         $("#vibe").attr("class", "center-align");
         $("#tbt").attr("class", "hide");
+        $("#back").addClass("hide");
+        $("#upload").removeClass("hide");
         $("#upload").on("click", goodVibes.submitVibe);
     },
 
