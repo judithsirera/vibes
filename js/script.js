@@ -26,8 +26,6 @@ var curiousity = [
     "Macaques in Japan use coins to buy vending machine snacks",
     "Kissing burns 2 calories a minute",
     "The animal Quokka, in Australia, is considered the world’s happiest animal",
-
-
 ]
 
 /**
