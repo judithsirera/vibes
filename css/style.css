@@ -13,6 +13,14 @@ p {
     width: 60%;
 }
 
+.instructions {
+    width: 100%;
+    margin: auto;
+    position: absolute;
+    top: 0cm;
+    font-size: 11px;
+}
+
 .hide {
     display: none;
 }
