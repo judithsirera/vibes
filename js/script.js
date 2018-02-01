@@ -94,6 +94,7 @@ var goodVibes = {
     vibe: null,
     input: null,
     last: "",
+    numOfHistory: 5,
 
     submitVibe: function () {
         var text = goodVibes.input.val();
@@ -186,13 +187,13 @@ var goodVibes = {
         }
 
         var list = $("#history-list"); //append list
-        for (let index = 0; index < 5; index++) {
+        for (let index = 0; index < this.numOfHistory; index++) {
             const idx = Math.floor(Math.random() * aux.length);
 
             var date = aux[idx].weekDay + ", " + aux[idx].monthName + " " + aux[idx].day + " of " + aux[idx].year
 
             var item = $("<li></li>")
-            item.append("<p>" + date + "</p>")
+            item.append("<p class='date'>" + date + "</p>")
             item.append("<p>" + goodVibes.decrypt(aux[idx].text) + "</p>")
 
             list.append(item)
