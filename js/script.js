@@ -28,6 +28,24 @@ var curiousity = [
     "The animal Quokka, in Australia, is considered the world’s happiest animal",
 ]
 
+Date.prototype.addDays = function (days) {
+    var dat = new Date(this.valueOf());
+    dat.setDate(dat.getDate() + days);
+    return dat;
+}
+
+Date.prototype.addMonths = function (months) {
+    var dat = new Date(this.valueOf());
+    dat.setMonth(dat.getMonth() + months);
+    return dat;
+}
+
+Date.prototype.addYears = function (years) {
+    var dat = new Date(this.valueOf());
+    dat.setYear(dat.getYear() + years);
+    return dat;
+}
+
 /**
  * COLLECT BTN
  * - SetSmiles
@@ -38,7 +56,7 @@ var collectBtn = {
     btn: null,
 
     setSmiles: function () {
-                
+
         if (user.vibes < 5) {
             this.btn.attr("src", "img/jar-" + user.vibes + ".png");
         } else {
@@ -75,6 +93,7 @@ var collectBtn = {
 var goodVibes = {
     vibe: null,
     input: null,
+    last: "",
 
     submitVibe: function () {
         var text = goodVibes.input.val();
@@ -103,9 +122,6 @@ var goodVibes = {
             text: this.encrypt(text),
             toCompare: d.getFullYear() + "/" + d.getMonth() + "/" + d.getDate()
         }
-
-
-
     },
 
     encrypt: function (textToEncrypt) {
@@ -125,12 +141,12 @@ var goodVibes = {
 
         $("#upload").off("click", goodVibes.submitVibe);
 
-        if (user.data.length > 0) {
+        if (user.data.length > 0 && false) {
             //show old vibe
             var idx = Math.floor(Math.random() * user.data.length);
             $("#tbt-title").html("Do you remember?");
             $("#tbt-date").html(user.data[idx].weekDay + ", " + user.data[idx].monthName + " " + user.data[idx].day + " of " + user.data[idx].year);
-            $("#tbt-text").html(decrypt(user.data[idx].text));
+            $("#tbt-text").html(goodVibes.decrypt(user.data[idx].text));
 
         } else {
             //show curiousity
@@ -148,8 +164,52 @@ var goodVibes = {
         $("#upload").on("click", goodVibes.submitVibe);
     },
 
+    showHistory: function () {
+        $("#history").css("display", "block")
+
+        $("#history-time").html("Last " + this.last)
+
+        var d = (new Date()).addMonths(-1);
+        switch (this.last) {
+            case "year": d = (new Date()).addYears(-1);
+                break;
+            case "week": d = (new Date()).addDays(-1);
+                break;
+        }
+        var lastDate = d.getTime();
+
+        var aux = user.allData.slice(); //Copy array and search for old vibes
+        for (let index = 0; index < aux.length; index++) {
+            if (aux[index].timestamp < lastDate) {
+                aux.splice(index, 1)
+            }
+        }
+
+        var list = $("#history-list"); //append list
+        for (let index = 0; index < 5; index++) {
+            const idx = Math.floor(Math.random() * aux.length);
+
+            var date = aux[idx].weekDay + ", " + aux[idx].monthName + " " + aux[idx].day + " of " + aux[idx].year
+
+            var item = $("<li></li>")
+            item.append("<p>" + date + "</p>")
+            item.append("<p>" + goodVibes.decrypt(aux[idx].text) + "</p>")
+
+            list.append(item)
+            aux.splice(idx, 1)
+        }
+    },
+
+    hideHistory: function () {
+        $("#history").css("display", "none")
+        $("#history-list").html("")
+    },
+
+
+
     init: function () {
         this.input = $("#vibe");
+        this.last = "month"
     }
 }
 

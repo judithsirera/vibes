@@ -8,6 +8,7 @@ var user = {
     id: "",
     vibes: 0,
     data: [],
+    allData: [],
 
     checkUser: function () {
         if (Cookies.get("VIBES_USER_ID")) {
@@ -61,6 +62,11 @@ var user = {
 
     init: function () {
         $("#switchBtn").on("click", this.switchUser);
+        $(".historyBtn").on("click", function (e) {
+            goodVibes.last = $(e.currentTarget).attr("data-type")
+            goodVibes.showHistory()
+        })
+        $("#closeBtn").on("click", goodVibes.hideHistory)
 
         // User exist
         if (this.checkUser()) {
@@ -89,8 +95,8 @@ var firebaseManager = {
     },
 
     initData: function (user_id) {
-        var d = new Date();
-        var today = d.getFullYear() + "/" + d.getMonth() + "/" + d.getDate();
+        var d = (new Date()).addDays(-7);
+        var weekAgo = d.getTime()
 
         return firebase.database().ref('/users/' + user_id + "/vibes/").once('value').then(function (messages) {
             if (messages.val()) {
@@ -101,12 +107,11 @@ var firebaseManager = {
                 //GET VIBES FROM MONTH AGO
                 var i = 0;
                 messages.forEach(function (msg) {
-                    monthAgo = msg.val().month - 1 == 0 ? 12 : msg.val().month - 1;
-
-                    if (msg.val().month == monthAgo) {
+                    user.allData.push(msg.val())
+                    if (msg.val().timestamp <= weekAgo) {
                         user.data[i] = msg.val();
                         i++;
-                    }
+                    }   
                 });
             }
         });
@@ -135,6 +140,7 @@ var firebaseManager = {
     },
 
     uploadToFirebase: function (vibe) {
+        user.allData.push(vibe)
         var databaseRef = firebase.database().ref("/users/" + user.id + "/vibes/" + vibe.timestamp).set(vibe);
     },
 
