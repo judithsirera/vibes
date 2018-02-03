@@ -135,11 +135,11 @@ var firebaseManager = {
         firebase.database().ref('/users/' + user_id).once('value').then(function (u) {
             //Register
             if (u.val() == null) {
-                var data = {
+                var password = {
                     "password": goodVibes.encrypt(color),
                     "vibes": ""
                 };
-                var databaseRef = firebase.database().ref("users/" + user_id).set(data);
+                var databaseRef = firebase.database().ref("users/" + user_id).set(password);
                 user.successLogin(user_id);
             //User
             } else {
@@ -151,9 +151,7 @@ var firebaseManager = {
     },
 
     loginUserInDB: function (user_id, color) {
-        firebase.database().ref('/users/' + user_id).once('value').then(function (u) {
-            console.log(goodVibes.decrypt(u.val().password));
-            
+        firebase.database().ref('/users/' + user_id).once('value').then(function (u) {            
             if (u.val() == null) {
                 user.displayError("No existing user");
             } else if (goodVibes.decrypt(u.val().password) != color) {
