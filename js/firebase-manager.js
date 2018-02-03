@@ -41,7 +41,20 @@ var user = {
         var color = $('#user_color').val().toUpperCase();
 
         if (username.length > 0 && color.length > 0) {
-            firebaseManager.checkUserInDB(username, color);
+            firebaseManager.loginUserInDB(username, color);
+        } else {
+            user.displayError("Complete all fields")
+        }
+    },
+
+    register: function (e) {
+        var username = $('#user_name').val().toUpperCase();
+        var color = $('#user_color').val().toUpperCase();
+
+        if (username.length > 0 && color.length > 0) {
+            firebaseManager.registerUserInDB(username, color);
+        } else {
+            user.displayError("Complete all fields")
         }
     },
 
@@ -56,8 +69,8 @@ var user = {
         keyboard.init();
     },
 
-    errorLogin: function () {
-        $("#login-error").css("visibility", "visible");
+    displayError: function (message) {
+        $("#login-error").css("visibility", "visible").html(message);
     },
 
     init: function () {
@@ -73,7 +86,8 @@ var user = {
             user.successLogin(this.id);
         } else {
             $("#login").css("display", "block");
-            $("#start").on("click", this.login);
+            $("#enter").on("click", this.login);
+            $("#register").on("click", this.register)
         }
     }
 }
@@ -117,22 +131,33 @@ var firebaseManager = {
         });
     },
 
-    registerUser: function (username, color) {
-        var password = {
-            "password": goodVibes.encrypt(color),
-            "vibes": ""
-        };
-        var databaseRef = firebase.database().ref("users/" + username).set(password);
+    registerUserInDB: function (user_id, color) {
+        firebase.database().ref('/users/' + user_id).once('value').then(function (u) {
+            //Register
+            if (u.val() == null) {
+                var data = {
+                    "password": goodVibes.encrypt(color),
+                    "vibes": ""
+                };
+                var databaseRef = firebase.database().ref("users/" + user_id).set(data);
+                user.successLogin(user_id);
+            //User
+            } else {
+                user.displayError("This user already exists")
+            }
+        })
+
+        
     },
 
-    checkUserInDB: function (user_id, color) {
+    loginUserInDB: function (user_id, color) {
         firebase.database().ref('/users/' + user_id).once('value').then(function (u) {
+            console.log(goodVibes.decrypt(u.val().password));
+            
             if (u.val() == null) {
-                firebaseManager.registerUser(user_id, color)
-                user.successLogin(user_id);
+                user.displayError("No existing user");
             } else if (goodVibes.decrypt(u.val().password) != color) {
-                //there's an error
-                user.errorLogin();
+                user.displayError("Wrong password");
             } else {
                 user.successLogin(user_id);
             }
