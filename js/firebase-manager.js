@@ -151,7 +151,7 @@ var firebaseManager = {
     },
 
     loginUserInDB: function (user_id, color) {
-        firebase.database().ref('/users/' + user_id).once('value').then(function (u) {            
+        firebase.database().ref('/users/' + user_id).once('value').then(function (u) { 
             if (u.val() == null) {
                 user.displayError("No existing user");
             } else if (goodVibes.decrypt(u.val().password) != color) {
