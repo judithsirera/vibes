@@ -9,7 +9,7 @@ I believe after a few days exercising your mind with good vibes is gonna be easi
 [Start now](https://judsirera.github.io/Vibes/)
 
 # Firebase Configuration
-Before starting you need to link this app to your firebase app. You just need to write you firebase app configuration parameters where the following code in [firebase-manajer.js](../blob/master/js/firebase-manajer.js):
+Before starting you need to link this app to your firebase app. You just need to write you firebase app configuration parameters where the following code in [firebase-manajer.js](../master/js/firebase-manajer.js):
 
 ```javascript
   config: {
