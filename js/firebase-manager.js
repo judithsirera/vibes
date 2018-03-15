@@ -100,12 +100,12 @@ var user = {
  */
 var firebaseManager = {
     config: {
-        apiKey: "AIzaSyBQKyTdcw6sT3qcavOHluVM3Akcg3rIz7s",
-        authDomain: "vibes-d62e9.firebaseapp.com",
-        databaseURL: "https://vibes-d62e9.firebaseio.com",
-        projectId: "vibes-d62e9",
-        storageBucket: "vibes-d62e9.appspot.com",
-        messagingSenderId: "1019159236803"
+      apiKey: YOUR_FIREBASE_APP_APIKEY,
+      authDomain: YOUR_FIREBASE_APP_AUTH_DOMAIN,
+      databaseURL: YOUR_FIREBASE_APP_DATABASE_URL,
+      projectId: YOUR_FIREBASE_APP_PROJECT_ID,
+      storageBucket: YOUR_FIREBASE_APP_STORE_BUCKET,
+      messagingSenderId: YOUR_FIREBASE_APP_MESSAGING_SENDER_ID
     },
 
     initData: function (user_id) {
