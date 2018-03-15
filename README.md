@@ -8,6 +8,21 @@ I believe after a few days exercising your mind with good vibes is gonna be easi
 
 [Start now](https://judsirera.github.io/Vibes/)
 
+# Firebase Configuration
+Before starting you need to link this app to your firebase app. You just need to write you firebase app configuration parameters where the following code in [firebase-manajer.js](../blob/master/js/firebase-manajer.js):
+
+```javascript
+  config: {
+    apiKey: YOUR_FIREBASE_APP_APIKEY,
+    authDomain: YOUR_FIREBASE_APP_AUTH_DOMAIN,
+    databaseURL: YOUR_FIREBASE_APP_DATABASE_URL,
+    projectId: YOUR_FIREBASE_APP_PROJECT_ID,
+    storageBucket: YOUR_FIREBASE_APP_STORE_BUCKET,
+    messagingSenderId: YOUR_FIREBASE_APP_MESSAGING_SENDER_ID
+  }
+```
+These parameters are given by firebase when you [create a project in their console](https://console.firebase.google.com/)
+
 ## Images
 ![alt text](screenshots/Vibes_screenshot1.png "Login / Sign up screen")
 ![alt text](screenshots/Vibes_screenshot2.png "Login / Main screen for adding Vibes")
