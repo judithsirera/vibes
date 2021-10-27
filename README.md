@@ -6,7 +6,7 @@ The goal of the app is to engage the user to train his brain to think positive. 
 
 I believe after a few days exercising your mind with good vibes is gonna be easier to see the world with positive eyes.
 
-[Start now](https://judsirera.github.io/Vibes/)
+[Start now](https://judithsirera.github.io/vibes/)
 
 # Firebase Configuration
 Before starting you need to link this app to your firebase app. You just need to write you firebase app configuration parameters where the following code in [firebase-manager.js](../master/js/firebase-manager.js):
